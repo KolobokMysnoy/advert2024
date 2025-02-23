@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	defaultFunc "github.com/KolobokMysnoy/advert2024/defaultFunc"
 	"github.com/joho/godotenv"
 )
 
@@ -46,7 +47,7 @@ func replaceElement(number []int, currentPos int, before []int) bool {
 	i := currentPos - 1
 
 	for i >= 0 {
-		if findElement(before, number[i]) {
+		if defaultFunc.FindElement(before, number[i]) {
 			tmp := number[firstPos]
 			number[firstPos] = number[i]
 			number[i] = tmp
@@ -82,7 +83,7 @@ func getRules(readCh chan string) (map[int][]int, error) {
 			break
 		}
 
-		numbers, err := convertNumbersInString(i, "|")
+		numbers, err := defaultFunc.ConvertNumbersInString(i, "|")
 		if err != nil || len(numbers) != 2 {
 			return nil, fmt.Errorf("error at convertNumbersInString: %s", err)
 		}
@@ -153,10 +154,10 @@ func main() {
 	isNeedUpdate := flag.Bool("update", false, "Used to override content from site")
 	flag.Parse()
 
-	getValuesFromLinkToFile(FILE_NAME, LINK, COOKIES, *isNeedUpdate)
+	defaultFunc.GetValuesFromLinkToFile(FILE_NAME, LINK, COOKIES, *isNeedUpdate)
 
 	readCh := make(chan string)
-	go getStringsFromFile(FILE_NAME, readCh)
+	go defaultFunc.GetStringsFromFile(FILE_NAME, readCh)
 
 	// NOTE work on task ------------------
 
@@ -168,7 +169,7 @@ func main() {
 
 	sum := 0
 	for i := range readCh {
-		numbers, err := convertNumbersInString(i, ",")
+		numbers, err := defaultFunc.ConvertNumbersInString(i, ",")
 		if err != nil {
 			fmt.Print("error at convertNumbersInString: ", err)
 			return

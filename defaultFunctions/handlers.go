@@ -1,4 +1,4 @@
-package main
+package defaultFunc
 
 import (
 	"bufio"
@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func getStringsFromFile(nameOfFile string, whereToWrite chan string) {
+func GetStringsFromFile(nameOfFile string, whereToWrite chan string) {
 	defer close(whereToWrite)
 
 	file, err := os.Open(nameOfFile)
@@ -27,7 +27,7 @@ func getStringsFromFile(nameOfFile string, whereToWrite chan string) {
 	}
 }
 
-func getDataFromLink(link string, cookie http.Cookie, whereToWrite chan string) {
+func GetDataFromLink(link string, cookie http.Cookie, whereToWrite chan string) {
 	defer close(whereToWrite)
 
 	// prepare cookie
@@ -71,7 +71,7 @@ func getDataFromLink(link string, cookie http.Cookie, whereToWrite chan string) 
 	}
 }
 
-func getValuesFromLinkToFile(fileName, link string, cookie http.Cookie, isNeedToRewrite bool) {
+func GetValuesFromLinkToFile(fileName, link string, cookie http.Cookie, isNeedToRewrite bool) {
 	_, err := os.Stat(fileName)
 
 	if os.IsNotExist(err) || isNeedToRewrite {
@@ -83,7 +83,7 @@ func getValuesFromLinkToFile(fileName, link string, cookie http.Cookie, isNeedTo
 		defer file.Close()
 
 		linkChannel := make(chan string)
-		go getDataFromLink(link, cookie, linkChannel)
+		go GetDataFromLink(link, cookie, linkChannel)
 
 		for {
 			val, ok := <-linkChannel
@@ -97,7 +97,7 @@ func getValuesFromLinkToFile(fileName, link string, cookie http.Cookie, isNeedTo
 	}
 }
 
-func convertNumbersInString(str string, separator string) ([]int, error) {
+func ConvertNumbersInString(str string, separator string) ([]int, error) {
 	numbers := make([]int, 0)
 
 	for _, v := range strings.Split(str, separator) {
