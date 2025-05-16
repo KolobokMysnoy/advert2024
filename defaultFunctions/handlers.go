@@ -101,6 +101,10 @@ func ConvertNumbersInString(str string, separator string) ([]int, error) {
 	numbers := make([]int, 0)
 
 	for _, v := range strings.Split(str, separator) {
+		if v == "" {
+			return []int{}, fmt.Errorf("can't convert empty string")
+		}
+
 		num, err := strconv.Atoi(v)
 		if err != nil {
 			return nil, err
