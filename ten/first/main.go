@@ -68,11 +68,15 @@ func Merge(left []FinishPoint, right []FinishPoint) []FinishPoint {
 	finishesVal := make([]FinishPoint, len(left))
 	copy(finishesVal, left)
 
-	for _, v := range right {
-		if !Exist(finishesVal, v) {
-			finishesVal = append(finishesVal, v)
-		}
-	}
+	// This is code from second half
+	finishesVal = append(finishesVal, right...)
+
+	// This is code from first half
+	// for _, v := range right {
+	// 	if !Exist(finishesVal, v) {
+	// 		finishesVal = append(finishesVal, v)
+	// 	}
+	// }
 
 	return finishesVal
 }
